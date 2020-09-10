@@ -1,0 +1,419 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D0E2CEDFE873BBE8DB23B56C /* Pods_BankStepper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45582225E1884A47A4D076D3 /* Pods_BankStepper.framework */; };
+		F50A216925078FE500A6B243 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50A216825078FE500A6B243 /* Validator.swift */; };
+		F52B69C225017F1C0080BA26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52B69C125017F1C0080BA26 /* AppDelegate.swift */; };
+		F52B69C625017F1C0080BA26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52B69C525017F1C0080BA26 /* ViewController.swift */; };
+		F52B69C925017F1C0080BA26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F52B69C725017F1C0080BA26 /* Main.storyboard */; };
+		F52B69CB25017F1D0080BA26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F52B69CA25017F1D0080BA26 /* Assets.xcassets */; };
+		F52B69CE25017F1D0080BA26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F52B69CC25017F1D0080BA26 /* LaunchScreen.storyboard */; };
+		F52B69D62502AE6E0080BA26 /* StepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52B69D52502AE6E0080BA26 /* StepperView.swift */; };
+		F52B69D8250403980080BA26 /* LongPressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52B69D7250403980080BA26 /* LongPressButton.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2189B3D8242F48E4CBA8940A /* Pods-BankStepper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BankStepper.debug.xcconfig"; path = "Target Support Files/Pods-BankStepper/Pods-BankStepper.debug.xcconfig"; sourceTree = "<group>"; };
+		45582225E1884A47A4D076D3 /* Pods_BankStepper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BankStepper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C184DEE5E85097E778CB2FF6 /* Pods-BankStepper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BankStepper.release.xcconfig"; path = "Target Support Files/Pods-BankStepper/Pods-BankStepper.release.xcconfig"; sourceTree = "<group>"; };
+		F50A216825078FE500A6B243 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		F52B69BE25017F1C0080BA26 /* BankStepper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BankStepper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F52B69C125017F1C0080BA26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F52B69C525017F1C0080BA26 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F52B69C825017F1C0080BA26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F52B69CA25017F1D0080BA26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F52B69CD25017F1D0080BA26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F52B69CF25017F1D0080BA26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F52B69D52502AE6E0080BA26 /* StepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperView.swift; sourceTree = "<group>"; };
+		F52B69D7250403980080BA26 /* LongPressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongPressButton.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F52B69BB25017F1C0080BA26 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0E2CEDFE873BBE8DB23B56C /* Pods_BankStepper.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B6B5A33B9A246FADC457E899 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				45582225E1884A47A4D076D3 /* Pods_BankStepper.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BAC10ED5A049257C51364520 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2189B3D8242F48E4CBA8940A /* Pods-BankStepper.debug.xcconfig */,
+				C184DEE5E85097E778CB2FF6 /* Pods-BankStepper.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		F52B69B525017F1C0080BA26 = {
+			isa = PBXGroup;
+			children = (
+				F52B69C025017F1C0080BA26 /* BankStepper */,
+				F52B69BF25017F1C0080BA26 /* Products */,
+				BAC10ED5A049257C51364520 /* Pods */,
+				B6B5A33B9A246FADC457E899 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F52B69BF25017F1C0080BA26 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F52B69BE25017F1C0080BA26 /* BankStepper.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F52B69C025017F1C0080BA26 /* BankStepper */ = {
+			isa = PBXGroup;
+			children = (
+				F52B69C125017F1C0080BA26 /* AppDelegate.swift */,
+				F52B69C525017F1C0080BA26 /* ViewController.swift */,
+				F52B69D52502AE6E0080BA26 /* StepperView.swift */,
+				F52B69D7250403980080BA26 /* LongPressButton.swift */,
+				F50A216825078FE500A6B243 /* Validator.swift */,
+				F52B69C725017F1C0080BA26 /* Main.storyboard */,
+				F52B69CA25017F1D0080BA26 /* Assets.xcassets */,
+				F52B69CC25017F1D0080BA26 /* LaunchScreen.storyboard */,
+				F52B69CF25017F1D0080BA26 /* Info.plist */,
+			);
+			path = BankStepper;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F52B69BD25017F1C0080BA26 /* BankStepper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F52B69D225017F1D0080BA26 /* Build configuration list for PBXNativeTarget "BankStepper" */;
+			buildPhases = (
+				1F8B406217787A98FBAA318B /* [CP] Check Pods Manifest.lock */,
+				F52B69BA25017F1C0080BA26 /* Sources */,
+				F52B69BB25017F1C0080BA26 /* Frameworks */,
+				F52B69BC25017F1C0080BA26 /* Resources */,
+				8A549EFA36D76F324888D650 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BankStepper;
+			productName = BankStepper;
+			productReference = F52B69BE25017F1C0080BA26 /* BankStepper.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F52B69B625017F1C0080BA26 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = Alexx;
+				TargetAttributes = {
+					F52B69BD25017F1C0080BA26 = {
+						CreatedOnToolsVersion = 11.3;
+					};
+				};
+			};
+			buildConfigurationList = F52B69B925017F1C0080BA26 /* Build configuration list for PBXProject "BankStepper" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F52B69B525017F1C0080BA26;
+			productRefGroup = F52B69BF25017F1C0080BA26 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F52B69BD25017F1C0080BA26 /* BankStepper */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F52B69BC25017F1C0080BA26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F52B69CE25017F1D0080BA26 /* LaunchScreen.storyboard in Resources */,
+				F52B69CB25017F1D0080BA26 /* Assets.xcassets in Resources */,
+				F52B69C925017F1C0080BA26 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1F8B406217787A98FBAA318B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BankStepper-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8A549EFA36D76F324888D650 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BankStepper/Pods-BankStepper-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BankStepper/Pods-BankStepper-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BankStepper/Pods-BankStepper-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F52B69BA25017F1C0080BA26 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F52B69C625017F1C0080BA26 /* ViewController.swift in Sources */,
+				F52B69D8250403980080BA26 /* LongPressButton.swift in Sources */,
+				F50A216925078FE500A6B243 /* Validator.swift in Sources */,
+				F52B69C225017F1C0080BA26 /* AppDelegate.swift in Sources */,
+				F52B69D62502AE6E0080BA26 /* StepperView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F52B69C725017F1C0080BA26 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F52B69C825017F1C0080BA26 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F52B69CC25017F1D0080BA26 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F52B69CD25017F1D0080BA26 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F52B69D025017F1D0080BA26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F52B69D125017F1D0080BA26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F52B69D325017F1D0080BA26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2189B3D8242F48E4CBA8940A /* Pods-BankStepper.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BankStepper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = No.BankStepper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F52B69D425017F1D0080BA26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C184DEE5E85097E778CB2FF6 /* Pods-BankStepper.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BankStepper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = No.BankStepper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F52B69B925017F1C0080BA26 /* Build configuration list for PBXProject "BankStepper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F52B69D025017F1D0080BA26 /* Debug */,
+				F52B69D125017F1D0080BA26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F52B69D225017F1D0080BA26 /* Build configuration list for PBXNativeTarget "BankStepper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F52B69D325017F1D0080BA26 /* Debug */,
+				F52B69D425017F1D0080BA26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F52B69B625017F1C0080BA26 /* Project object */;
+}
