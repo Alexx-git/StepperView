@@ -56,7 +56,7 @@ protocol StepperViewDelegate {
 
 @IBDesignable
 
-class StepperView: UIStackView, UITextFieldDelegate {
+class StepperView: UIView, UITextFieldDelegate {
     
     private let stackView = UIStackView()
     
@@ -72,15 +72,21 @@ class StepperView: UIStackView, UITextFieldDelegate {
     private var minusHeightConstraint: NSLayoutConstraint?
     private var minusWidthConstraint: NSLayoutConstraint?
     
-    var font: UIFont = UIFont.systemFont(ofSize: 16.0) {
+    @IBInspectable var font: UIFont = UIFont.systemFont(ofSize: 16.0) {
         didSet {
             textField.font = font
         }
     }
     
-    var color: UIColor = .systemBlue {
+    @IBInspectable var color: UIColor = .systemBlue {
         didSet {
             updateColor()
+        }
+    }
+    
+    @IBInspectable var spacing: CGFloat = 5.0 {
+        didSet {
+            stackView.spacing = spacing
         }
     }
     
@@ -119,11 +125,25 @@ class StepperView: UIStackView, UITextFieldDelegate {
     
     var isEditing: Bool = false
     
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonSetup()
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonSetup()
+    }
+    
+    convenience init() {
+        self.init(frame: .zero)
+    }
+    
     func commonSetup() {
         setupLayout()
         
         stackView.alignment = .center
-        stackView.spacing = 5.0
         
         textField.delegate = self
         textField.borderStyle = .none
@@ -149,23 +169,6 @@ class StepperView: UIStackView, UITextFieldDelegate {
         minusButton.touchEnd = {_ in
             self.accelerationModifier = 1
         }
-        
-        validator = Validator(limits: (0, 200), step: step)
-    }
-    
-    init() {
-        super.init(frame: .zero)
-        commonSetup()
-    }
-    
-    required init(coder: NSCoder) {
-        super.init(coder: coder)
-        commonSetup()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonSetup()
     }
     
     func setupLayout() {
