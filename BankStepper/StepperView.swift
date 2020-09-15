@@ -8,21 +8,53 @@
 
 import UIKit
 
-typealias Currency = Double
-
-protocol PStepperValidator {
-    var limits: Limits { get set }
-    
-    func canStepUp(value: Currency) -> Bool
-    func canStepDown(value: Currency) -> Bool
-    
-    func checkText(_ text: String?) -> Validator.Result
-    func shouldReplace(text: String?, range: NSRange, with string: String) -> Validator.Decision
+enum ErrorKey {
+    case incorrectSymbols, crossedMax, crossedMin, nonMultiple
 }
 
-protocol PStepperDelegate {
-    func stepperView(_ stepperView: StepperView, gotError error: Validator.ErrorKey)
+struct Result {
+    var valid: Bool
+    var errorKey: ErrorKey?
+    
+    static func error(_ errorKey: ErrorKey) -> Result {
+        return Result(valid: false, errorKey: errorKey)
+    }
+    
+    static var ok: Result {
+        return Result(valid: true, errorKey: nil)
+    }
 }
+
+struct Decision {
+    var allow: Bool
+    var errorKey: ErrorKey?
+    var replacement: String?
+    
+    static var ok = Decision(allow: true, errorKey: nil, replacement: nil)
+    static func replacement(_ string: String) -> Self {
+        return Decision(allow: false, errorKey: nil, replacement: string)
+    }
+    static func noRepError(_ errorKey: ErrorKey?) -> Self {
+        return Decision(allow: false, errorKey: errorKey, replacement: nil)
+    }
+}
+
+protocol StepperViewValidator {
+    
+    mutating func updateValues(from stepper: StepperView)
+    
+    func canStepUp(value: Double) -> Bool
+    func canStepDown(value: Double) -> Bool
+    
+    func checkText(_ text: String?) -> Result
+    func shouldReplace(text: String?, range: NSRange, with string: String) -> Decision
+}
+
+protocol StepperViewDelegate {
+    func stepperView(_ stepperView: StepperView, gotError error: ErrorKey)
+}
+
+@IBDesignable
 
 class StepperView: UIStackView, UITextFieldDelegate {
     
@@ -32,6 +64,13 @@ class StepperView: UIStackView, UITextFieldDelegate {
     private let minusButton = LongPressButton()
     
     private let textField = UITextField()
+    
+    private var textFieldWidthConstraint: NSLayoutConstraint?
+    
+    private var plusHeightConstraint: NSLayoutConstraint?
+    private var plusWidthConstraint: NSLayoutConstraint?
+    private var minusHeightConstraint: NSLayoutConstraint?
+    private var minusWidthConstraint: NSLayoutConstraint?
     
     var font: UIFont = UIFont.systemFont(ofSize: 16.0) {
         didSet {
@@ -45,31 +84,42 @@ class StepperView: UIStackView, UITextFieldDelegate {
         }
     }
     
-    var validator: PStepperValidator?
+    var validator: StepperViewValidator?
     
-    var delegate: PStepperDelegate?
+    var delegate: StepperViewDelegate?
     
-    var placeholderValue: Currency?
+    var placeholderValue: Double?
     
-    var value: Currency {
+    var value: Double {
         get {
-            return Currency(textField.text ?? "0") ?? 0
+            if let text = textField.text {
+                return Double(text) ?? 0
+            }
+            textField.text = "\(limits.min ?? 0.0)"
+            return limits.min ?? 0.0
         }
         set {
             textField.text = "\(newValue)"
         }
     }
     
-    var step: Currency = 10
+    @IBInspectable var step: Double = 10 {
+        didSet {
+            validator?.updateValues(from: self)
+        }
+    }
+    
+    var limits: Limits = (nil, nil) {
+        didSet {
+            validator?.updateValues(from: self)
+        }
+    }
     
     var accelerationModifier = 1
     
     var isEditing: Bool = false
     
-    init() {
-        super.init(frame: .zero)
-        
-        
+    func commonSetup() {
         setupLayout()
         
         stackView.alignment = .center
@@ -78,11 +128,6 @@ class StepperView: UIStackView, UITextFieldDelegate {
         textField.delegate = self
         textField.borderStyle = .none
         textField.textAlignment = .center
-        
-        plusImage = UIImage(named: "plus")
-        minusImage = UIImage(named: "minus")
-        plusButton.setImage(UIImage(named: "plus"), for: .normal)
-        minusButton.setImage(UIImage(named: "minus"), for: .normal)
         
         plusButton.touchBegin = {_ in
             self.stepPlus()
@@ -105,38 +150,94 @@ class StepperView: UIStackView, UITextFieldDelegate {
             self.accelerationModifier = 1
         }
         
-        validator = Validator.Check(limits: (0, 200), step: step)
+        validator = Validator(limits: (0, 200), step: step)
+    }
+    
+    init() {
+        super.init(frame: .zero)
+        commonSetup()
     }
     
     required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        commonSetup()
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonSetup()
     }
     
     func setupLayout() {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(stackView)
-        
-        NSLayoutConstraint(item: stackView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0.0).isActive = true
-        NSLayoutConstraint(item: stackView, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1.0, constant: 0.0).isActive = true
-        NSLayoutConstraint(item: stackView, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1.0, constant: 0.0).isActive = true
-        NSLayoutConstraint(item: stackView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0.0).isActive = true
+        stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        stackView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        stackView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+
         stackView.addArrangedSubview(plusButton)
         stackView.addArrangedSubview(textField)
         stackView.addArrangedSubview(minusButton)
-        
-        NSLayoutConstraint(item: plusButton, attribute: .height, relatedBy: .equal, toItem: plusButton, attribute: .width, multiplier: 1.0, constant: 0.0).isActive = true
-        NSLayoutConstraint(item: minusButton, attribute: .height, relatedBy: .equal, toItem: minusButton, attribute: .width, multiplier: 1.0, constant: 0.0).isActive = true
-        NSLayoutConstraint(item: plusButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 30.0).isActive = true
-        NSLayoutConstraint(item: minusButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 30.0).isActive = true
     }
     
-    var plusImage: UIImage? {
+    @IBInspectable var textFieldWidth: CGFloat = 0.0 {
+        didSet {
+            if textFieldWidth == 0.0 {
+                textFieldWidthConstraint?.isActive = false
+            } else if textFieldWidthConstraint != nil {
+                textFieldWidthConstraint?.constant = buttonSize.height
+                textFieldWidthConstraint?.isActive = true
+            } else {
+                textFieldWidthConstraint = textField.widthAnchor.constraint(equalToConstant: textFieldWidth)
+                textFieldWidthConstraint?.isActive = true
+            }
+        }
+    }
+    
+    @IBInspectable var buttonSize: CGSize = .zero {
+        didSet {
+            if buttonSize == .zero {
+                plusHeightConstraint?.isActive = false
+                plusWidthConstraint?.isActive = false
+                minusHeightConstraint?.isActive = false
+                minusWidthConstraint?.isActive = false
+                return
+            }
+            if plusHeightConstraint != nil {
+                plusHeightConstraint?.constant = buttonSize.height
+            } else {
+                plusHeightConstraint = plusButton.heightAnchor.constraint(equalToConstant: buttonSize.height)
+            }
+            if plusWidthConstraint != nil {
+                plusWidthConstraint?.constant = buttonSize.width
+            } else {
+                plusWidthConstraint = plusButton.widthAnchor.constraint(equalToConstant: buttonSize.width)
+            }
+            if minusHeightConstraint != nil {
+                minusHeightConstraint?.constant = buttonSize.height
+            } else {
+                minusHeightConstraint = minusButton.heightAnchor.constraint(equalToConstant: buttonSize.height)
+            }
+            if minusWidthConstraint != nil {
+                minusWidthConstraint?.constant = buttonSize.width
+            } else {
+                minusWidthConstraint = minusButton.widthAnchor.constraint(equalToConstant: buttonSize.width)
+            }
+            plusHeightConstraint?.isActive = true
+            plusWidthConstraint?.isActive = true
+            minusHeightConstraint?.isActive = true
+            minusWidthConstraint?.isActive = true
+        }
+    }
+    
+    @IBInspectable var plusImage: UIImage? {
         didSet {
             plusButton.setImage(plusImage, for: .normal)
         }
     }
     
-    var minusImage: UIImage? {
+    @IBInspectable var minusImage: UIImage? {
         didSet {
             minusButton.setImage(minusImage, for: .normal)
         }
@@ -155,12 +256,12 @@ class StepperView: UIStackView, UITextFieldDelegate {
     }
     
     func stepPlus() {
-        value += step * Currency(accelerationModifier)
+        value += step * Double(accelerationModifier)
         updateState()
     }
     
     func stepMinus() {
-        value -= step * Currency(accelerationModifier)
+        value -= step * Double(accelerationModifier)
         updateState()
     }
     
@@ -180,10 +281,10 @@ class StepperView: UIStackView, UITextFieldDelegate {
             delegate?.stepperView(self, gotError: result.errorKey!)
             switch result.errorKey {
                 case .crossedMax:
-                    value = validator.limits.max!
+                    value = limits.max!
                     abortTicking()
                 case .crossedMin:
-                    value = validator.limits.min!
+                    value = limits.min!
                     abortTicking()
                 case .nonMultiple:
                     value -= value.truncatingRemainder(dividingBy: step)
@@ -197,7 +298,12 @@ class StepperView: UIStackView, UITextFieldDelegate {
         return true
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        isEditing = true
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
+        isEditing = false
         updateState()
     }
     
@@ -215,7 +321,3 @@ class StepperView: UIStackView, UITextFieldDelegate {
         return false
     }
 }
-
-
-
-

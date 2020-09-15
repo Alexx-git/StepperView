@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D0E2CEDFE873BBE8DB23B56C /* Pods_BankStepper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45582225E1884A47A4D076D3 /* Pods_BankStepper.framework */; };
 		F50A216925078FE500A6B243 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50A216825078FE500A6B243 /* Validator.swift */; };
 		F52B69C225017F1C0080BA26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52B69C125017F1C0080BA26 /* AppDelegate.swift */; };
 		F52B69C625017F1C0080BA26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52B69C525017F1C0080BA26 /* ViewController.swift */; };
@@ -19,9 +18,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2189B3D8242F48E4CBA8940A /* Pods-BankStepper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BankStepper.debug.xcconfig"; path = "Target Support Files/Pods-BankStepper/Pods-BankStepper.debug.xcconfig"; sourceTree = "<group>"; };
-		45582225E1884A47A4D076D3 /* Pods_BankStepper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BankStepper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C184DEE5E85097E778CB2FF6 /* Pods-BankStepper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BankStepper.release.xcconfig"; path = "Target Support Files/Pods-BankStepper/Pods-BankStepper.release.xcconfig"; sourceTree = "<group>"; };
 		F50A216825078FE500A6B243 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		F52B69BE25017F1C0080BA26 /* BankStepper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BankStepper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F52B69C125017F1C0080BA26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -39,37 +35,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0E2CEDFE873BBE8DB23B56C /* Pods_BankStepper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B6B5A33B9A246FADC457E899 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				45582225E1884A47A4D076D3 /* Pods_BankStepper.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		BAC10ED5A049257C51364520 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				2189B3D8242F48E4CBA8940A /* Pods-BankStepper.debug.xcconfig */,
-				C184DEE5E85097E778CB2FF6 /* Pods-BankStepper.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		F52B69B525017F1C0080BA26 = {
 			isa = PBXGroup;
 			children = (
 				F52B69C025017F1C0080BA26 /* BankStepper */,
 				F52B69BF25017F1C0080BA26 /* Products */,
-				BAC10ED5A049257C51364520 /* Pods */,
-				B6B5A33B9A246FADC457E899 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,11 +80,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F52B69D225017F1D0080BA26 /* Build configuration list for PBXNativeTarget "BankStepper" */;
 			buildPhases = (
-				1F8B406217787A98FBAA318B /* [CP] Check Pods Manifest.lock */,
 				F52B69BA25017F1C0080BA26 /* Sources */,
 				F52B69BB25017F1C0080BA26 /* Frameworks */,
 				F52B69BC25017F1C0080BA26 /* Resources */,
-				8A549EFA36D76F324888D650 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -164,48 +138,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		1F8B406217787A98FBAA318B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BankStepper-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8A549EFA36D76F324888D650 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BankStepper/Pods-BankStepper-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BankStepper/Pods-BankStepper-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BankStepper/Pods-BankStepper-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F52B69BA25017F1C0080BA26 /* Sources */ = {
@@ -358,7 +290,6 @@
 		};
 		F52B69D325017F1D0080BA26 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2189B3D8242F48E4CBA8940A /* Pods-BankStepper.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -376,7 +307,6 @@
 		};
 		F52B69D425017F1D0080BA26 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C184DEE5E85097E778CB2FF6 /* Pods-BankStepper.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

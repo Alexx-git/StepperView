@@ -1,6 +1,0 @@
-framework module Pods_BankStepper {
-  umbrella header "Pods-BankStepper-umbrella.h"
-
-  export *
-  module * { export * }
-}
