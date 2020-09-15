@@ -96,7 +96,7 @@ class StepperView: UIView, UITextFieldDelegate {
     
     var placeholderValue: Double?
     
-    var value: Double {
+    @IBInspectable var value: Double {
         get {
             if let text = textField.text {
                 return Double(text) ?? 0
@@ -118,6 +118,7 @@ class StepperView: UIView, UITextFieldDelegate {
     var limits: Limits = (nil, nil) {
         didSet {
             validator?.updateValues(from: self)
+            updateState()
         }
     }
     
@@ -280,8 +281,15 @@ class StepperView: UIView, UITextFieldDelegate {
         plusButton.isEnabled = validator.canStepUp(value: value)
         minusButton.isEnabled = validator.canStepDown(value: value)
         let result = validator.checkText(textField.text)
-        if !result.valid {
+        var text = textField.text
+        if result.valid {
             text = text?.removeBeginningZeros().removeLastZeros()
+            if text == "" {
+                textField.text = "0"
+            } else {
+                textField.text = text
+            }
+        } else {
             delegate?.stepperView(self, gotError: result.errorKey!)
             switch result.errorKey {
                 case .crossedMax:
@@ -292,6 +300,8 @@ class StepperView: UIView, UITextFieldDelegate {
                     abortTicking()
                 case .nonMultiple:
                     value -= value.truncatingRemainder(dividingBy: step)
+                case .incorrectSymbols:
+                    value = limits.min ?? 0
                 default: break
             }
         }

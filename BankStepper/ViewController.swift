@@ -21,9 +21,9 @@ class ViewController: UIViewController {
         stepper.minusImage = UIImage(named: "minus_circle")
         stepper.buttonSize = CGSize(width: 40, height: 40)
         stepper.textFieldWidth = 100.0
+        stepper.validator = Validator(with: stepper)
         stepper.limits = (0, 200)
         stepper.step = 10
-        stepper.validator = Validator(with: stepper)
     }
 
     override func viewWillLayoutSubviews() {

@@ -65,7 +65,7 @@ struct Validator: StepperViewValidator {
     }
     
     func checkText(_ text: String?) -> Result {
-        guard let value = Double(text ?? "") else {return .error(ErrorKey.incorrectSymbols)}
+        guard let value = Double(text ?? "0") else {return .error(ErrorKey.incorrectSymbols)}
         let result = value.checkLimits(limits: limits)
         guard result.valid else {return result}
         if value.checkMultiple(step: step).valid {
