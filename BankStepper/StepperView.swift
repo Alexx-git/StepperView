@@ -281,6 +281,7 @@ class StepperView: UIView, UITextFieldDelegate {
         minusButton.isEnabled = validator.canStepDown(value: value)
         let result = validator.checkText(textField.text)
         if !result.valid {
+            text = text?.removeBeginningZeros().removeLastZeros()
             delegate?.stepperView(self, gotError: result.errorKey!)
             switch result.errorKey {
                 case .crossedMax:
@@ -322,5 +323,27 @@ class StepperView: UIView, UITextFieldDelegate {
         }
         textField.text = (text as NSString).replacingCharacters(in: range, with: result.replacement ?? "")
         return false
+    }
+}
+
+extension String {
+    func removeBeginningZeros() -> String {
+        var text = self
+        while text.first == "0" && text[text.index(self.startIndex, offsetBy: 1)] != "." {
+            text.remove(at: text.startIndex)
+        }
+        return text
+    }
+    
+    func removeLastZeros() -> String {
+        var text = self
+        guard let _ = text.range(of: ".") else {return text}
+        while text.last == "0" {
+            text.removeLast()
+        }
+        if text.last == "." {
+            text.removeLast()
+        }
+        return text
     }
 }

@@ -106,10 +106,4 @@ struct Validator: StepperViewValidator {
         let charset = CharacterSet.decimalDigits
         return text.rangeOfCharacter(from: charset.inverted) == nil
     }
-    
-    func removeBeginningZeros(text: inout String) {
-        while text.first == "0" && text[text.startIndex] != "." {
-            text.remove(at: text.startIndex)
-        }
-    }
 }
