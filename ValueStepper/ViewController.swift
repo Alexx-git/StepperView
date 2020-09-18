@@ -1,8 +1,8 @@
 //
 //  ViewController.swift
-//  BankStepper
+//  ValueStepper
 //
-//  Created by Vlad on 9/3/20.
+//  Created by Alexx on 9/3/20.
 //  Copyright © 2020 Alexx. All rights reserved.
 //
 
@@ -12,18 +12,19 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let stepper = BankStepper.StepperView()
+        let stepper = ValueStepper.StepperView()
         view.addSubview(stepper)
         stepper.translatesAutoresizingMaskIntoConstraints = false
         stepper.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         stepper.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         stepper.plusImage = UIImage(named: "plus_circle")
         stepper.minusImage = UIImage(named: "minus_circle")
-        stepper.buttonSize = CGSize(width: 40, height: 40)
+        stepper.buttonsSize = CGSize(width: 40, height: 40)
         stepper.textFieldWidth = 100.0
         stepper.validator = Validator(with: stepper)
         stepper.limits = (0, 200)
-        stepper.step = 10
+        stepper.step = 0.1
+        stepper.value = 300
     }
 
     override func viewWillLayoutSubviews() {

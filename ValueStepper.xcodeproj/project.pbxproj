@@ -19,7 +19,7 @@
 
 /* Begin PBXFileReference section */
 		F50A216825078FE500A6B243 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
-		F52B69BE25017F1C0080BA26 /* BankStepper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BankStepper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F52B69BE25017F1C0080BA26 /* ValueStepper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ValueStepper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F52B69C125017F1C0080BA26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F52B69C525017F1C0080BA26 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F52B69C825017F1C0080BA26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -44,7 +44,7 @@
 		F52B69B525017F1C0080BA26 = {
 			isa = PBXGroup;
 			children = (
-				F52B69C025017F1C0080BA26 /* BankStepper */,
+				F52B69C025017F1C0080BA26 /* ValueStepper */,
 				F52B69BF25017F1C0080BA26 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,12 +52,12 @@
 		F52B69BF25017F1C0080BA26 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F52B69BE25017F1C0080BA26 /* BankStepper.app */,
+				F52B69BE25017F1C0080BA26 /* ValueStepper.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F52B69C025017F1C0080BA26 /* BankStepper */ = {
+		F52B69C025017F1C0080BA26 /* ValueStepper */ = {
 			isa = PBXGroup;
 			children = (
 				F52B69C125017F1C0080BA26 /* AppDelegate.swift */,
@@ -70,15 +70,15 @@
 				F52B69CC25017F1D0080BA26 /* LaunchScreen.storyboard */,
 				F52B69CF25017F1D0080BA26 /* Info.plist */,
 			);
-			path = BankStepper;
+			path = ValueStepper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F52B69BD25017F1C0080BA26 /* BankStepper */ = {
+		F52B69BD25017F1C0080BA26 /* ValueStepper */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F52B69D225017F1D0080BA26 /* Build configuration list for PBXNativeTarget "BankStepper" */;
+			buildConfigurationList = F52B69D225017F1D0080BA26 /* Build configuration list for PBXNativeTarget "ValueStepper" */;
 			buildPhases = (
 				F52B69BA25017F1C0080BA26 /* Sources */,
 				F52B69BB25017F1C0080BA26 /* Frameworks */,
@@ -88,9 +88,9 @@
 			);
 			dependencies = (
 			);
-			name = BankStepper;
+			name = ValueStepper;
 			productName = BankStepper;
-			productReference = F52B69BE25017F1C0080BA26 /* BankStepper.app */;
+			productReference = F52B69BE25017F1C0080BA26 /* ValueStepper.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -108,7 +108,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F52B69B925017F1C0080BA26 /* Build configuration list for PBXProject "BankStepper" */;
+			buildConfigurationList = F52B69B925017F1C0080BA26 /* Build configuration list for PBXProject "ValueStepper" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -121,7 +121,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F52B69BD25017F1C0080BA26 /* BankStepper */,
+				F52B69BD25017F1C0080BA26 /* ValueStepper */,
 			);
 		};
 /* End PBXProject section */
@@ -293,12 +293,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = BankStepper/Info.plist;
+				INFOPLIST_FILE = ValueStepper/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = No.BankStepper;
+				PRODUCT_BUNDLE_IDENTIFIER = No.ValueStepper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -310,12 +310,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = BankStepper/Info.plist;
+				INFOPLIST_FILE = ValueStepper/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = No.BankStepper;
+				PRODUCT_BUNDLE_IDENTIFIER = No.ValueStepper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -325,7 +325,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F52B69B925017F1C0080BA26 /* Build configuration list for PBXProject "BankStepper" */ = {
+		F52B69B925017F1C0080BA26 /* Build configuration list for PBXProject "ValueStepper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F52B69D025017F1D0080BA26 /* Debug */,
@@ -334,7 +334,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F52B69D225017F1D0080BA26 /* Build configuration list for PBXNativeTarget "BankStepper" */ = {
+		F52B69D225017F1D0080BA26 /* Build configuration list for PBXNativeTarget "ValueStepper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F52B69D325017F1D0080BA26 /* Debug */,

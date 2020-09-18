@@ -1,8 +1,8 @@
 //
 //  Validator.swift
-//  BankStepper
+//  ValueStepper
 //
-//  Created by Vlad on 08.09.2020.
+//  Created by Alexx on 08.09.2020.
 //  Copyright © 2020 Alexx. All rights reserved.
 //
 
@@ -20,8 +20,8 @@ extension Double {
     }
     
     func checkLimits(limits: Limits) -> Result {
-        guard checkMax(limit: limits.max) else {return .error(.crossedMax)}
-        guard checkMin(limit: limits.min) else {return .error(.crossedMin)}
+        guard checkMax(limit: limits.max) else { return .error(.crossedMax) }
+        guard checkMin(limit: limits.min) else { return .error(.crossedMin) }
         return .ok
     }
     
@@ -35,7 +35,7 @@ extension Double {
 }
 
 
-struct Validator: StepperViewValidator {
+class Validator: StepperViewValidator {
     
     
     private var limits: Limits = (nil, nil)
@@ -47,11 +47,11 @@ struct Validator: StepperViewValidator {
         self.step = step
     }
     
-    init(with stepper: StepperView) {
+    convenience init(with stepper: StepperView) {
         self.init(limits: stepper.limits, step: stepper.step)
     }
     
-    mutating func updateValues(from stepper: StepperView) {
+    func updateValues(from stepper: StepperView) {
         limits = stepper.limits
         step = stepper.step
     }
@@ -65,9 +65,9 @@ struct Validator: StepperViewValidator {
     }
     
     func checkText(_ text: String?) -> Result {
-        guard let value = Double(text ?? "0") else {return .error(ErrorKey.incorrectSymbols)}
+        guard let value = Double(text ?? "0") else { return .error(ErrorKey.incorrectSymbols) }
         let result = value.checkLimits(limits: limits)
-        guard result.valid else {return result}
+        guard result.valid else { return result }
         if value.checkMultiple(step: step).valid {
             return .ok
         } else {
@@ -77,9 +77,9 @@ struct Validator: StepperViewValidator {
     
     func shouldReplace(text: String? = "", range: NSRange, with string: String) -> Decision {
         let newText = (text! as NSString).replacingCharacters(in: range, with: string)
-        guard (checkValueIsCorrect(text: newText) != nil) else { return .noRepError(.incorrectSymbols) }
-        guard let value = Double(newText) else { return .noRepError(.incorrectSymbols) }
-        guard value.checkMax(limit: limits.max) else {return .noRepError(.crossedMax)}
+        guard (checkValueIsCorrect(text: newText) != nil) else { return .noReplacementError(.incorrectSymbols) }
+        guard let value = Double(newText) else { return .noReplacementError(.incorrectSymbols) }
+        guard value.checkMax(limit: limits.max) else { return .noReplacementError(.crossedMax) }
         return Decision.ok
     }
     

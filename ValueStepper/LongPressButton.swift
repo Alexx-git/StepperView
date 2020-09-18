@@ -1,12 +1,13 @@
 //
 //  LongPressButton.swift
-//  BankStepper
+//  ValueStepper
 //
-//  Created by Vlad on 9/5/20.
+//  Created by Alexx on 9/5/20.
 //  Copyright © 2020 Alexx. All rights reserved.
 //
 
 import UIKit
+
 
 class LongPressButton: UIButton {
     
@@ -14,7 +15,7 @@ class LongPressButton: UIButton {
     
     var touchBegin: Handler?
     
-    var touchTick: Handler?
+    var touchStep: Handler?
     
     var touchEnd: Handler?
     
@@ -33,7 +34,7 @@ class LongPressButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func abort() {
+    func cancelTouch() {
         timer?.invalidate()
     }
     
@@ -46,17 +47,17 @@ class LongPressButton: UIButton {
             case .began:
                 touchBegin?(self)
                 timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true, block: {_ in
-                    self.touchTick?(self)
+                    self.touchStep?(self)
                 })
-            case .ended:
-                abort()
+            case .ended, .cancelled:
+                cancelTouch()
                 touchEnd?(self)
             default: break
         }
     }
     
     deinit {
-        abort()
+        cancelTouch()
     }
 
 }

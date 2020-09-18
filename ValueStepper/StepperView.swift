@@ -1,8 +1,8 @@
 //
 //  StepperView.swift
-//  BankStepper
+//  ValueStepper
 //
-//  Created by Vlad on 9/4/20.
+//  Created by Alexx on 9/4/20.
 //  Copyright © 2020 Alexx. All rights reserved.
 //
 
@@ -34,7 +34,7 @@ struct Decision {
     static func replacement(_ string: String) -> Self {
         return Decision(allow: false, errorKey: nil, replacement: string)
     }
-    static func noRepError(_ errorKey: ErrorKey?) -> Self {
+    static func noReplacementError(_ errorKey: ErrorKey?) -> Self {
         return Decision(allow: false, errorKey: errorKey, replacement: nil)
     }
 }
@@ -55,7 +55,6 @@ protocol StepperViewDelegate {
 }
 
 @IBDesignable
-
 class StepperView: UIView, UITextFieldDelegate {
     
     private let stackView = UIStackView()
@@ -105,7 +104,7 @@ class StepperView: UIView, UITextFieldDelegate {
             return limits.min ?? 0.0
         }
         set {
-            textField.text = "\(newValue)"
+            textField.text = "\(newValue)".removeLastZeros().removeBeginningZeros()
         }
     }
     
@@ -153,7 +152,7 @@ class StepperView: UIView, UITextFieldDelegate {
         plusButton.touchBegin = {_ in
             self.stepPlus()
         }
-        plusButton.touchTick = {_ in
+        plusButton.touchStep = {_ in
             self.stepPlus()
             self.accelerate()
         }
@@ -163,7 +162,7 @@ class StepperView: UIView, UITextFieldDelegate {
         minusButton.touchBegin = {_ in
             self.stepMinus()
         }
-        minusButton.touchTick = {_ in
+        minusButton.touchStep = {_ in
             self.stepMinus()
             self.accelerate()
         }
@@ -190,7 +189,7 @@ class StepperView: UIView, UITextFieldDelegate {
             if textFieldWidth == 0.0 {
                 textFieldWidthConstraint?.isActive = false
             } else if textFieldWidthConstraint != nil {
-                textFieldWidthConstraint?.constant = buttonSize.height
+                textFieldWidthConstraint?.constant = textFieldWidth
                 textFieldWidthConstraint?.isActive = true
             } else {
                 textFieldWidthConstraint = textField.widthAnchor.constraint(equalToConstant: textFieldWidth)
@@ -199,9 +198,9 @@ class StepperView: UIView, UITextFieldDelegate {
         }
     }
     
-    @IBInspectable var buttonSize: CGSize = .zero {
+    @IBInspectable var buttonsSize: CGSize = .zero {
         didSet {
-            if buttonSize == .zero {
+            if buttonsSize == .zero {
                 plusHeightConstraint?.isActive = false
                 plusWidthConstraint?.isActive = false
                 minusHeightConstraint?.isActive = false
@@ -209,24 +208,24 @@ class StepperView: UIView, UITextFieldDelegate {
                 return
             }
             if plusHeightConstraint != nil {
-                plusHeightConstraint?.constant = buttonSize.height
+                plusHeightConstraint?.constant = buttonsSize.height
             } else {
-                plusHeightConstraint = plusButton.heightAnchor.constraint(equalToConstant: buttonSize.height)
+                plusHeightConstraint = plusButton.heightAnchor.constraint(equalToConstant: buttonsSize.height)
             }
             if plusWidthConstraint != nil {
-                plusWidthConstraint?.constant = buttonSize.width
+                plusWidthConstraint?.constant = buttonsSize.width
             } else {
-                plusWidthConstraint = plusButton.widthAnchor.constraint(equalToConstant: buttonSize.width)
+                plusWidthConstraint = plusButton.widthAnchor.constraint(equalToConstant: buttonsSize.width)
             }
             if minusHeightConstraint != nil {
-                minusHeightConstraint?.constant = buttonSize.height
+                minusHeightConstraint?.constant = buttonsSize.height
             } else {
-                minusHeightConstraint = minusButton.heightAnchor.constraint(equalToConstant: buttonSize.height)
+                minusHeightConstraint = minusButton.heightAnchor.constraint(equalToConstant: buttonsSize.height)
             }
             if minusWidthConstraint != nil {
-                minusWidthConstraint?.constant = buttonSize.width
+                minusWidthConstraint?.constant = buttonsSize.width
             } else {
-                minusWidthConstraint = minusButton.widthAnchor.constraint(equalToConstant: buttonSize.width)
+                minusWidthConstraint = minusButton.widthAnchor.constraint(equalToConstant: buttonsSize.width)
             }
             plusHeightConstraint?.isActive = true
             plusWidthConstraint?.isActive = true
@@ -270,8 +269,8 @@ class StepperView: UIView, UITextFieldDelegate {
     }
     
     func abortTicking() {
-        plusButton.abort()
-        minusButton.abort()
+        plusButton.cancelTouch()
+        minusButton.cancelTouch()
         accelerationModifier = 1
         isEditing = false
     }
@@ -338,6 +337,7 @@ class StepperView: UIView, UITextFieldDelegate {
 
 extension String {
     func removeBeginningZeros() -> String {
+        guard self.count > 1 else {return self}
         var text = self
         while text.first == "0" && text[text.index(self.startIndex, offsetBy: 1)] != "." {
             text.remove(at: text.startIndex)

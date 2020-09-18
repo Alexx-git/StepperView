@@ -1,14 +1,17 @@
 //
 //  AppDelegate.swift
-//  BankStepper
+//  ValueStepper
 //
-//  Created by Vlad on 9/3/20.
+//  Created by Alexx on 9/3/20.
 //  Copyright © 2020 Alexx. All rights reserved.
 //
 
 
 
 import UIKit
+
+// longpressbutton imitate button behavior - set highlighted on long press
+// 
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
