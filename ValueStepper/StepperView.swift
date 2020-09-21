@@ -298,7 +298,7 @@ class StepperView: UIView, UITextFieldDelegate {
                     value = limits.min!
                     abortTicking()
                 case .nonMultiple:
-                    value -= value.truncatingRemainder(dividingBy: step)
+                    value -= value.remainder(dividingBy: step)
                 case .incorrectSymbols:
                     value = limits.min ?? 0
                 default: break
