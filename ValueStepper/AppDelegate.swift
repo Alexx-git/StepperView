@@ -10,9 +10,6 @@
 
 import UIKit
 
-// longpressbutton imitate button behavior - set highlighted on long press
-// 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

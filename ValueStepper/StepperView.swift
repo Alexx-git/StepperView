@@ -96,6 +96,55 @@ class StepperView: UIView, UITextFieldDelegate {
     var placeholderValue: Double?
     
     var formatter: NumberFormatter = NumberFormatter()
+    
+    @IBInspectable var buttonsSize: CGSize = .zero {
+        didSet {
+            if buttonsSize == .zero {
+                plusHeightConstraint?.isActive = false
+                plusWidthConstraint?.isActive = false
+                minusHeightConstraint?.isActive = false
+                minusWidthConstraint?.isActive = false
+                return
+            }
+            if plusHeightConstraint != nil {
+                plusHeightConstraint?.constant = buttonsSize.height
+            } else {
+                plusHeightConstraint = plusButton.heightAnchor.constraint(equalToConstant: buttonsSize.height)
+            }
+            if plusWidthConstraint != nil {
+                plusWidthConstraint?.constant = buttonsSize.width
+            } else {
+                plusWidthConstraint = plusButton.widthAnchor.constraint(equalToConstant: buttonsSize.width)
+            }
+            if minusHeightConstraint != nil {
+                minusHeightConstraint?.constant = buttonsSize.height
+            } else {
+                minusHeightConstraint = minusButton.heightAnchor.constraint(equalToConstant: buttonsSize.height)
+            }
+            if minusWidthConstraint != nil {
+                minusWidthConstraint?.constant = buttonsSize.width
+            } else {
+                minusWidthConstraint = minusButton.widthAnchor.constraint(equalToConstant: buttonsSize.width)
+            }
+            plusHeightConstraint?.isActive = true
+            plusWidthConstraint?.isActive = true
+            minusHeightConstraint?.isActive = true
+            minusWidthConstraint?.isActive = true
+        }
+    }
+    
+    @IBInspectable var plusImage: UIImage? {
+        didSet {
+            plusButton.setImage(plusImage, for: .normal)
+        }
+    }
+    
+    @IBInspectable var minusImage: UIImage? {
+        didSet {
+            minusButton.setImage(minusImage, for: .normal)
+        }
+    }
+    
     @IBInspectable var minimumFractionDigits: Int = 0 {
         didSet {
             formatter.minimumFractionDigits = minimumFractionDigits
@@ -201,68 +250,6 @@ class StepperView: UIView, UITextFieldDelegate {
         stackView.addArrangedSubview(plusButton)
         stackView.addArrangedSubview(textField)
         stackView.addArrangedSubview(minusButton)
-    }
-    
-    @IBInspectable var textFieldWidth: CGFloat = 0.0 {
-        didSet {
-            if textFieldWidth == 0.0 {
-                textFieldWidthConstraint?.isActive = false
-            } else if textFieldWidthConstraint != nil {
-                textFieldWidthConstraint?.constant = textFieldWidth
-                textFieldWidthConstraint?.isActive = true
-            } else {
-                textFieldWidthConstraint = textField.widthAnchor.constraint(equalToConstant: textFieldWidth)
-                textFieldWidthConstraint?.isActive = true
-            }
-        }
-    }
-    
-    @IBInspectable var buttonsSize: CGSize = .zero {
-        didSet {
-            if buttonsSize == .zero {
-                plusHeightConstraint?.isActive = false
-                plusWidthConstraint?.isActive = false
-                minusHeightConstraint?.isActive = false
-                minusWidthConstraint?.isActive = false
-                return
-            }
-            if plusHeightConstraint != nil {
-                plusHeightConstraint?.constant = buttonsSize.height
-            } else {
-                plusHeightConstraint = plusButton.heightAnchor.constraint(equalToConstant: buttonsSize.height)
-            }
-            if plusWidthConstraint != nil {
-                plusWidthConstraint?.constant = buttonsSize.width
-            } else {
-                plusWidthConstraint = plusButton.widthAnchor.constraint(equalToConstant: buttonsSize.width)
-            }
-            if minusHeightConstraint != nil {
-                minusHeightConstraint?.constant = buttonsSize.height
-            } else {
-                minusHeightConstraint = minusButton.heightAnchor.constraint(equalToConstant: buttonsSize.height)
-            }
-            if minusWidthConstraint != nil {
-                minusWidthConstraint?.constant = buttonsSize.width
-            } else {
-                minusWidthConstraint = minusButton.widthAnchor.constraint(equalToConstant: buttonsSize.width)
-            }
-            plusHeightConstraint?.isActive = true
-            plusWidthConstraint?.isActive = true
-            minusHeightConstraint?.isActive = true
-            minusWidthConstraint?.isActive = true
-        }
-    }
-    
-    @IBInspectable var plusImage: UIImage? {
-        didSet {
-            plusButton.setImage(plusImage, for: .normal)
-        }
-    }
-    
-    @IBInspectable var minusImage: UIImage? {
-        didSet {
-            minusButton.setImage(minusImage, for: .normal)
-        }
     }
     
     func updateColor() {
