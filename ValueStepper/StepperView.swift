@@ -295,8 +295,8 @@ class StepperView: UIView, UITextFieldDelegate {
         guard let validator = validator else {return}
         plusButton.isEnabled = validator.canStepUp(value: value)
         minusButton.isEnabled = validator.canStepDown(value: value)
-        let result = validator.checkText(textField.text)
-        var text = textField.text
+        let text = textField.text
+        let result = validator.checkText(text)
         if result.valid {
             if text == "" {
                 textField.text = "0"
@@ -321,6 +321,8 @@ class StepperView: UIView, UITextFieldDelegate {
         }
         updateValue()
     }
+    
+// MARK: - UITextFieldDelegate methods
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
