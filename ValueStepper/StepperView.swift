@@ -247,9 +247,9 @@ class StepperView: UIView, UITextFieldDelegate {
         stackView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
-        stackView.addArrangedSubview(plusButton)
-        stackView.addArrangedSubview(textField)
         stackView.addArrangedSubview(minusButton)
+        stackView.addArrangedSubview(textField)
+        stackView.addArrangedSubview(plusButton)
     }
     
     override var intrinsicContentSize: CGSize {
