@@ -252,6 +252,10 @@ class StepperView: UIView, UITextFieldDelegate {
         stackView.addArrangedSubview(minusButton)
     }
     
+    override var intrinsicContentSize: CGSize {
+        return stackView.intrinsicContentSize
+    }
+    
     func updateColor() {
         plusButton.tintColor = color
         minusButton.tintColor = color
