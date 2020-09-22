@@ -83,7 +83,7 @@ class StepperView: UIView, UITextFieldDelegate {
         }
     }
     
-    @IBInspectable var spacing: CGFloat = 5.0 {
+    var spacing: CGFloat = 5.0 {
         didSet {
             stackView.spacing = spacing
         }
@@ -97,9 +97,9 @@ class StepperView: UIView, UITextFieldDelegate {
     
     var formatter: NumberFormatter = NumberFormatter()
     
-    @IBInspectable var buttonsSize: CGSize = .zero {
+    var buttonsSize: CGSize? {
         didSet {
-            if buttonsSize == .zero {
+            guard let buttonsSize = buttonsSize else {
                 plusHeightConstraint?.isActive = false
                 plusWidthConstraint?.isActive = false
                 minusHeightConstraint?.isActive = false
@@ -145,14 +145,14 @@ class StepperView: UIView, UITextFieldDelegate {
         }
     }
     
-    @IBInspectable var minimumFractionDigits: Int = 0 {
+    var minimumFractionDigits: Int = 0 {
         didSet {
             formatter.minimumFractionDigits = minimumFractionDigits
             updateValue()
         }
     }
     
-    @IBInspectable var maximumFractionDigits: Int = 0 {
+    var maximumFractionDigits: Int = 0 {
         didSet {
             formatter.maximumFractionDigits = maximumFractionDigits
             updateValue()
