@@ -68,7 +68,8 @@ class Validator: StepperViewValidator {
         guard let value = Double(text ?? "0") else { return .error(ErrorKey.incorrectSymbols) }
         let result = value.checkLimits(limits: limits)
         guard result.valid else { return result }
-        if value.checkMultiple(step: step).valid {
+        let stepValue = value - (limits.min ?? 0.0)
+        if stepValue.checkMultiple(step: step).valid {
             return .ok
         } else {
             return .error(.nonMultiple)
