@@ -95,6 +95,21 @@ class StepperView: UIView, UITextFieldDelegate {
     
     var placeholderValue: Double?
     
+    var formatter: NumberFormatter = NumberFormatter()
+    @IBInspectable var minimumFractionDigits: Int = 0 {
+        didSet {
+            formatter.minimumFractionDigits = minimumFractionDigits
+            updateValue()
+        }
+    }
+    
+    @IBInspectable var maximumFractionDigits: Int = 0 {
+        didSet {
+            formatter.maximumFractionDigits = maximumFractionDigits
+            updateValue()
+        }
+    }
+    
     @IBInspectable var value: Double {
         get {
             if let text = textField.text {
@@ -104,12 +119,13 @@ class StepperView: UIView, UITextFieldDelegate {
             return limits.min ?? 0.0
         }
         set {
-            textField.text = "\(newValue)".removeLastZeros().removeBeginningZeros()
+            textField.text = formatter.string(from: NSNumber(value: newValue))
         }
     }
     
     @IBInspectable var step: Double = 10 {
         didSet {
+            maximumFractionDigits = step.fractionDigits()
             validator?.updateValues(from: self)
         }
     }
@@ -169,6 +185,9 @@ class StepperView: UIView, UITextFieldDelegate {
         minusButton.touchEnd = {_ in
             self.accelerationModifier = 1
         }
+        
+        formatter.numberStyle = .decimal
+        formatter.usesGroupingSeparator = false
     }
     
     func setupLayout() {
@@ -275,6 +294,12 @@ class StepperView: UIView, UITextFieldDelegate {
         isEditing = false
     }
     
+    func updateValue() {
+        guard let string = formatter.string(from: NSNumber(value: value)) else {return}
+        textField.text = string
+        value = Double(string) ?? 0
+    }
+    
     func updateState() {
         guard let validator = validator else {return}
         plusButton.isEnabled = validator.canStepUp(value: value)
@@ -282,7 +307,6 @@ class StepperView: UIView, UITextFieldDelegate {
         let result = validator.checkText(textField.text)
         var text = textField.text
         if result.valid {
-            text = text?.removeBeginningZeros().removeLastZeros()
             if text == "" {
                 textField.text = "0"
             } else {
@@ -304,6 +328,7 @@ class StepperView: UIView, UITextFieldDelegate {
                 default: break
             }
         }
+        updateValue()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -332,28 +357,5 @@ class StepperView: UIView, UITextFieldDelegate {
         }
         textField.text = (text as NSString).replacingCharacters(in: range, with: result.replacement ?? "")
         return false
-    }
-}
-
-extension String {
-    func removeBeginningZeros() -> String {
-        guard self.count > 1 else {return self}
-        var text = self
-        while text.first == "0" && text[text.index(self.startIndex, offsetBy: 1)] != "." {
-            text.remove(at: text.startIndex)
-        }
-        return text
-    }
-    
-    func removeLastZeros() -> String {
-        var text = self
-        guard let _ = text.range(of: ".") else {return text}
-        while text.last == "0" {
-            text.removeLast()
-        }
-        if text.last == "." {
-            text.removeLast()
-        }
-        return text
     }
 }

@@ -32,6 +32,16 @@ extension Double {
             return .error(.nonMultiple)
         }
     }
+    
+    func fractionDigits() -> Int {
+        var value = self
+        var digits = 0
+        while value.remainder(dividingBy: 1.0).magnitude > 0.00001 {
+            digits += 1
+            value *= 10.0
+        }
+        return digits
+    }
 }
 
 
