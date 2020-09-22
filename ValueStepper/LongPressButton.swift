@@ -36,6 +36,7 @@ class LongPressButton: UIButton {
     
     func cancelTouch() {
         timer?.invalidate()
+        isHighlighted = false
     }
     
     @objc func tap() {
@@ -46,7 +47,9 @@ class LongPressButton: UIButton {
         switch gestureRecognizer.state {
             case .began:
                 touchBegin?(self)
+                self.isHighlighted = true
                 timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true, block: {_ in
+                    self.isHighlighted = true
                     self.touchStep?(self)
                 })
             case .ended, .cancelled:
