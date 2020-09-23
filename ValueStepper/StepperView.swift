@@ -236,7 +236,8 @@ class StepperView: UIView, UITextFieldDelegate {
         }
         
         formatter.numberStyle = .decimal
-        formatter.usesGroupingSeparator = false
+        formatter.groupingSeparator = ","
+        formatter.decimalSeparator = "."
     }
     
     func setupLayout() {
@@ -285,17 +286,21 @@ class StepperView: UIView, UITextFieldDelegate {
         isEditing = false
     }
     
+    func string(from value: Double) -> String? {
+        return formatter.string(from: NSNumber(value: value))
+    }
+    
     func updateValue() {
-        guard let string = formatter.string(from: NSNumber(value: value)) else {return}
+        guard let string = string(from: value) else {return}
         textField.text = string
-        value = Double(string) ?? 0
+        value = Double(string.removingComas()) ?? 0
     }
     
     func updateState() {
         guard let validator = validator else {return}
         plusButton.isEnabled = validator.canStepUp(value: value)
         minusButton.isEnabled = validator.canStepDown(value: value)
-        let text = textField.text
+        let text = textField.text?.removingComas()
         let result = validator.checkText(text)
         if result.valid {
             if text == "" {
@@ -350,5 +355,11 @@ class StepperView: UIView, UITextFieldDelegate {
         }
         textField.text = (text as NSString).replacingCharacters(in: range, with: result.replacement ?? "")
         return false
+    }
+}
+
+extension String {
+    func removingComas() -> String {
+        return filter{!",".contains($0)}
     }
 }
