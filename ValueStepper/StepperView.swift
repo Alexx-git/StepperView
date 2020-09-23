@@ -87,7 +87,7 @@ class StepperView: UIView, UITextFieldDelegate {
         }
     }
     
-    @IBInspectable var color: UIColor = .systemBlue {
+    @IBInspectable var color: UIColor = .black {
         didSet {
             updateColor()
         }
@@ -335,8 +335,10 @@ class StepperView: UIView, UITextFieldDelegate {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineBreakMode = .byTruncatingHead
         paragraphStyle.alignment = .center
+        
         let attr = [NSAttributedString.Key.paragraphStyle: paragraphStyle,
-                    NSAttributedString.Key.font: textField.font
+                    NSAttributedString.Key.font: font,
+                    NSAttributedString.Key.strokeColor: color
         ]
         textField.defaultTextAttributes = attr
     }
@@ -351,6 +353,7 @@ class StepperView: UIView, UITextFieldDelegate {
         textField.defaultTextAttributes = [:]
         textField.font = font
         textField.textAlignment = .center
+        textField.textColor = color
     }
     
 // MARK: - UITextFieldDelegate methods
