@@ -64,12 +64,22 @@ class StepperView: UIView, UITextFieldDelegate {
     
     private let textField = UITextField()
     
-    private var textFieldWidthConstraint: NSLayoutConstraint?
-    
     private var plusHeightConstraint: NSLayoutConstraint?
     private var plusWidthConstraint: NSLayoutConstraint?
     private var minusHeightConstraint: NSLayoutConstraint?
     private var minusWidthConstraint: NSLayoutConstraint?
+    
+    @IBInspectable var plusImage: UIImage? {
+        didSet {
+            plusButton.setImage(plusImage, for: .normal)
+        }
+    }
+    
+    @IBInspectable var minusImage: UIImage? {
+        didSet {
+            minusButton.setImage(minusImage, for: .normal)
+        }
+    }
     
     @IBInspectable var font: UIFont = UIFont.systemFont(ofSize: 16.0) {
         didSet {
@@ -83,9 +93,30 @@ class StepperView: UIView, UITextFieldDelegate {
         }
     }
     
-    var spacing: CGFloat = 5.0 {
+    @IBInspectable var value: Double {
+        get {
+            if let text = textField.text?.removingComas() {
+                return Double(text) ?? limits.min ?? 0.0
+            }
+            textField.text = string(from: limits.min ?? 0.0)
+            return limits.min ?? 0.0
+        }
+        set {
+            textField.text = string(from: newValue)
+        }
+    }
+    
+    @IBInspectable var step: Double = 10 {
         didSet {
-            stackView.spacing = spacing
+            maximumFractionDigits = step.fractionDigits()
+            validator?.updateValues(from: self)
+        }
+    }
+    
+    var limits: Limits = (nil, nil) {
+        didSet {
+            validator?.updateValues(from: self)
+            updateState()
         }
     }
     
@@ -93,9 +124,27 @@ class StepperView: UIView, UITextFieldDelegate {
     
     var delegate: StepperViewDelegate?
     
-    var placeholderValue: Double?
-    
     var formatter: NumberFormatter = NumberFormatter()
+    
+    var minimumFractionDigits: Int = 0 {
+        didSet {
+            formatter.minimumFractionDigits = minimumFractionDigits
+            updateValue()
+        }
+    }
+    
+    var maximumFractionDigits: Int = 0 {
+        didSet {
+            formatter.maximumFractionDigits = maximumFractionDigits
+            updateValue()
+        }
+    }
+    
+    var spacing: CGFloat = 5.0 {
+        didSet {
+            stackView.spacing = spacing
+        }
+    }
     
     var buttonsSize: CGSize? {
         didSet {
@@ -133,59 +182,6 @@ class StepperView: UIView, UITextFieldDelegate {
         }
     }
     
-    @IBInspectable var plusImage: UIImage? {
-        didSet {
-            plusButton.setImage(plusImage, for: .normal)
-        }
-    }
-    
-    @IBInspectable var minusImage: UIImage? {
-        didSet {
-            minusButton.setImage(minusImage, for: .normal)
-        }
-    }
-    
-    var minimumFractionDigits: Int = 0 {
-        didSet {
-            formatter.minimumFractionDigits = minimumFractionDigits
-            updateValue()
-        }
-    }
-    
-    var maximumFractionDigits: Int = 0 {
-        didSet {
-            formatter.maximumFractionDigits = maximumFractionDigits
-            updateValue()
-        }
-    }
-    
-    @IBInspectable var value: Double {
-        get {
-            if let text = textField.text {
-                return Double(text) ?? 0
-            }
-            textField.text = "\(limits.min ?? 0.0)"
-            return limits.min ?? 0.0
-        }
-        set {
-            textField.text = formatter.string(from: NSNumber(value: newValue))
-        }
-    }
-    
-    @IBInspectable var step: Double = 10 {
-        didSet {
-            maximumFractionDigits = step.fractionDigits()
-            validator?.updateValues(from: self)
-        }
-    }
-    
-    var limits: Limits = (nil, nil) {
-        didSet {
-            validator?.updateValues(from: self)
-            updateState()
-        }
-    }
-    
     var accelerationModifier = 1
     
     var isEditing: Bool = false
@@ -207,8 +203,6 @@ class StepperView: UIView, UITextFieldDelegate {
     
     func commonSetup() {
         setupLayout()
-        
-        stackView.alignment = .center
         
         textField.delegate = self
         textField.borderStyle = .none
@@ -250,6 +244,7 @@ class StepperView: UIView, UITextFieldDelegate {
         stackView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
+        stackView.alignment = .center
         stackView.addArrangedSubview(minusButton)
         stackView.addArrangedSubview(textField)
         stackView.addArrangedSubview(plusButton)

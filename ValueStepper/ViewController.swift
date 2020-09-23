@@ -20,10 +20,10 @@ class ViewController: UIViewController {
         stepper.plusImage = UIImage(named: "plus_circle")
         stepper.minusImage = UIImage(named: "minus_circle")
         stepper.buttonsSize = CGSize(width: 40, height: 40)
-        stepper.font = UIFont.init(name: stepper.font.fontName, size: 40.0)!
+        stepper.font = UIFont.init(name: stepper.font.fontName, size: 20.0)!
         stepper.validator = Validator(with: stepper)
-        stepper.limits = (0, 200)
-        stepper.step = 0.001
+        stepper.limits = (0, 2000)
+        stepper.step = 0.01
         stepper.value = 0.0
     }
 

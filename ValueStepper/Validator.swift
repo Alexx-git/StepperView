@@ -47,7 +47,6 @@ extension Double {
 
 class Validator: StepperViewValidator {
     
-    
     private var limits: Limits = (nil, nil)
     
     private var step: Double
