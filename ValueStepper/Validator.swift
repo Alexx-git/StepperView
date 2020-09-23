@@ -26,7 +26,7 @@ extension Double {
     }
     
     func checkMultiple(step: Double) -> Result {
-        if self.truncatingRemainder(dividingBy: step) == 0 {
+        if self.remainder(dividingBy: step).magnitude < 0.00001 {
             return .ok
         } else {
             return .error(.nonMultiple)
