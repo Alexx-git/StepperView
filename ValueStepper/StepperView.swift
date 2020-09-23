@@ -251,6 +251,9 @@ class StepperView: UIView, UITextFieldDelegate {
         stackView.addArrangedSubview(minusButton)
         stackView.addArrangedSubview(textField)
         stackView.addArrangedSubview(plusButton)
+        minusButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        plusButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        textField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
     
     override var intrinsicContentSize: CGSize {
