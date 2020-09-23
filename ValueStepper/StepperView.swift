@@ -214,6 +214,8 @@ class StepperView: UIView, UITextFieldDelegate {
         textField.borderStyle = .none
         textField.textAlignment = .center
         
+        setTruncateHead()
+        
         plusButton.touchBegin = {_ in
             self.stepPlus()
         }
@@ -273,11 +275,15 @@ class StepperView: UIView, UITextFieldDelegate {
     }
     
     func stepPlus() {
+        textField.resignFirstResponder()
+        endEditing()
         value += step * Double(accelerationModifier)
         updateState()
     }
     
     func stepMinus() {
+        textField.resignFirstResponder()
+        endEditing()
         value -= step * Double(accelerationModifier)
         updateState()
     }
@@ -330,6 +336,28 @@ class StepperView: UIView, UITextFieldDelegate {
         updateValue()
     }
     
+    func setTruncateHead() {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineBreakMode = .byTruncatingHead
+        paragraphStyle.alignment = .center
+        let attr = [NSAttributedString.Key.paragraphStyle: paragraphStyle,
+                    NSAttributedString.Key.font: textField.font
+        ]
+        textField.defaultTextAttributes = attr
+    }
+    
+    func endEditing() {
+        isEditing = false
+        setTruncateHead()
+    }
+    
+    func startEditing() {
+        isEditing = true
+        textField.defaultTextAttributes = [:]
+        textField.font = font
+        textField.textAlignment = .center
+    }
+    
 // MARK: - UITextFieldDelegate methods
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -338,11 +366,12 @@ class StepperView: UIView, UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        isEditing = true
+        startEditing()
+        textField.text = textField.text?.removingComas()
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        isEditing = false
+        endEditing()
         updateState()
     }
     
