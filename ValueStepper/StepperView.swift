@@ -343,7 +343,7 @@ class StepperView: UIView, UITextFieldDelegate {
         
         let attr = [NSAttributedString.Key.paragraphStyle: paragraphStyle,
                     NSAttributedString.Key.font: font,
-                    NSAttributedString.Key.strokeColor: color
+                    NSAttributedString.Key.foregroundColor: color
         ]
         textField.defaultTextAttributes = attr
     }
