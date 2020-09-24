@@ -49,16 +49,7 @@ class Validator: StepperViewValidator {
     
     private var limits: Limits = (nil, nil)
     
-    private var step: Double
-    
-    init(limits: Limits = (nil, nil), step: Double) {
-        self.limits = limits
-        self.step = step
-    }
-    
-    convenience init(with stepper: StepperView) {
-        self.init(limits: stepper.limits, step: stepper.step)
-    }
+    private var step: Double = 1.0
     
     func updateValues(from stepper: StepperView) {
         limits = stepper.limits

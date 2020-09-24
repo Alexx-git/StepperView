@@ -109,18 +109,23 @@ class StepperView: UIView, UITextFieldDelegate {
     @IBInspectable var step: Double = 10 {
         didSet {
             maximumFractionDigits = step.fractionDigits()
-            validator?.updateValues(from: self)
+            validator.updateValues(from: self)
+            updateState()
         }
     }
     
     var limits: Limits = (nil, nil) {
         didSet {
-            validator?.updateValues(from: self)
+            validator.updateValues(from: self)
             updateState()
         }
     }
     
-    var validator: StepperViewValidator?
+    var validator: StepperViewValidator = Validator() {
+        didSet {
+            validator.updateValues(from: self)
+        }
+    }
     
     var delegate: StepperViewDelegate?
     
