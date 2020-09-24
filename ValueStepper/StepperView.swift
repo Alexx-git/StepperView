@@ -134,14 +134,14 @@ class StepperView: UIView, UITextFieldDelegate {
     var minimumFractionDigits: Int = 0 {
         didSet {
             formatter.minimumFractionDigits = minimumFractionDigits
-            updateValue()
+            updateFormat()
         }
     }
     
     var maximumFractionDigits: Int = 0 {
         didSet {
             formatter.maximumFractionDigits = maximumFractionDigits
-            updateValue()
+            updateFormat()
         }
     }
     
@@ -299,10 +299,10 @@ class StepperView: UIView, UITextFieldDelegate {
         return formatter.string(from: NSNumber(value: value))
     }
     
-    func updateValue() {
+    func updateFormat() {
         guard let string = string(from: value) else {return}
         textField.text = string
-        value = Double(string.removingComas()) ?? 0
+        value = Double(string.removingComas()) ?? limits.min ?? 0
     }
     
     func updateState() {
@@ -333,7 +333,7 @@ class StepperView: UIView, UITextFieldDelegate {
                 default: break
             }
         }
-        updateValue()
+        updateFormat()
     }
     
     func setTruncateHead() {
