@@ -41,12 +41,13 @@ struct Decision {
 
 protocol StepperViewValidator {
     
-    mutating func updateValues(from stepper: StepperView)
+    func updateValues(from stepper: StepperView)
     
     func canStepUp(value: Double) -> Bool
     func canStepDown(value: Double) -> Bool
     
     func checkText(_ text: String?) -> Result
+    func checkValue(_ value: Double) -> Result
     func shouldReplace(text: String?, range: NSRange, with string: String) -> Decision
 }
 
@@ -93,6 +94,7 @@ class StepperView: UIView, UITextFieldDelegate {
         }
     }
     
+    
     @IBInspectable var value: Double {
         get {
             if let text = textField.text?.removingComas() {
@@ -102,7 +104,14 @@ class StepperView: UIView, UITextFieldDelegate {
             return limits.min ?? 0.0
         }
         set {
-            textField.text = string(from: newValue)
+            updateButtons()
+            let response = validator.checkValue(newValue)
+            if response.valid {
+                textField.text = string(from: newValue)
+            } else {
+                textField.text = string(from: correctValue(newValue, error: response.errorKey!))
+            }
+            
         }
     }
     
@@ -305,11 +314,31 @@ class StepperView: UIView, UITextFieldDelegate {
         value = Double(string.removingComas()) ?? limits.min ?? 0
     }
     
-    func updateState() {
-        guard let validator = validator else {return}
+    func updateButtons() {
         plusButton.isEnabled = validator.canStepUp(value: value)
         minusButton.isEnabled = validator.canStepDown(value: value)
-        let text = textField.text?.removingComas()
+    }
+    
+    func correctValue(_ value: Double, error: ErrorKey) -> Double {
+        var correctValue: Double = limits.min ?? 0
+        switch error {
+            case .crossedMax:
+                correctValue = limits.max!
+                abortTicking()
+            case .crossedMin:
+                correctValue = limits.min!
+                abortTicking()
+            case .nonMultiple:
+                correctValue = value - value.remainder(dividingBy: step)
+            case .incorrectSymbols:
+                correctValue = limits.min ?? 0
+            default: break
+        }
+        return correctValue
+    }
+    
+    func updateText() {
+        guard let text = textField.text?.removingComas() else {return}
         let result = validator.checkText(text)
         if result.valid {
             if text == "" {
@@ -318,21 +347,16 @@ class StepperView: UIView, UITextFieldDelegate {
                 textField.text = text
             }
         } else {
-            delegate?.stepperView(self, gotError: result.errorKey!)
-            switch result.errorKey {
-                case .crossedMax:
-                    value = limits.max!
-                    abortTicking()
-                case .crossedMin:
-                    value = limits.min!
-                    abortTicking()
-                case .nonMultiple:
-                    value -= value.remainder(dividingBy: step)
-                case .incorrectSymbols:
-                    value = limits.min ?? 0
-                default: break
-            }
+            let error = result.errorKey!
+            delegate?.stepperView(self, gotError: error)
+            value = correctValue(value, error: error)
         }
+        updateFormat()
+    }
+    
+    func updateState() {
+        updateButtons()
+        updateText()
         updateFormat()
     }
     
@@ -380,7 +404,6 @@ class StepperView: UIView, UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return false }
-        guard let validator = validator else { return false }
         let result = validator.shouldReplace(text: text, range: range, with: string)
         if result.allow {
             return true

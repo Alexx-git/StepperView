@@ -66,6 +66,10 @@ class Validator: StepperViewValidator {
     
     func checkText(_ text: String?) -> Result {
         guard let value = Double(text ?? "0") else { return .error(ErrorKey.incorrectSymbols) }
+        return checkValue(value)
+    }
+    
+    func checkValue(_ value: Double) -> Result {
         let result = value.checkLimits(limits: limits)
         guard result.valid else { return result }
         let stepValue = value - (limits.min ?? 0.0)
