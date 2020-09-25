@@ -88,9 +88,11 @@ class StepperView: UIView, UITextFieldDelegate {
         }
     }
     
-    @IBInspectable var color: UIColor = .black {
+    @IBInspectable var textColor: UIColor = .black {
         didSet {
-            updateColor()
+            textField.textColor = textColor
+            guard textField.defaultTextAttributes[.foregroundColor] != nil  else {return}
+            textField.defaultTextAttributes[.foregroundColor] = textColor
         }
     }
     
@@ -196,6 +198,13 @@ class StepperView: UIView, UITextFieldDelegate {
         }
     }
     
+    var buttonsTintColor: UIColor = .black {
+        didSet {
+            plusButton.tintColor = buttonsTintColor
+            minusButton.tintColor = buttonsTintColor
+        }
+    }
+    
     var accelerationModifier = 1
     
     var isEditing: Bool = false
@@ -269,12 +278,6 @@ class StepperView: UIView, UITextFieldDelegate {
     
     override var intrinsicContentSize: CGSize {
         return stackView.intrinsicContentSize
-    }
-    
-    func updateColor() {
-        plusButton.tintColor = color
-        minusButton.tintColor = color
-        textField.textColor = color
     }
 
     func accelerate() {
@@ -367,7 +370,7 @@ class StepperView: UIView, UITextFieldDelegate {
         
         let attr = [NSAttributedString.Key.paragraphStyle: paragraphStyle,
                     NSAttributedString.Key.font: font,
-                    NSAttributedString.Key.foregroundColor: color
+                    NSAttributedString.Key.foregroundColor: textColor
         ]
         textField.defaultTextAttributes = attr
     }
@@ -382,7 +385,7 @@ class StepperView: UIView, UITextFieldDelegate {
         textField.defaultTextAttributes = [:]
         textField.font = font
         textField.textAlignment = .center
-        textField.textColor = color
+        textField.textColor = textColor
     }
     
 // MARK: - UITextFieldDelegate methods
