@@ -21,10 +21,11 @@ class ViewController: UIViewController {
         stepper.minusImage = UIImage(named: "minus_circle")
         stepper.buttonsSize = CGSize(width: 40, height: 40)
         stepper.font = UIFont.init(name: stepper.font.fontName, size: 20.0)!
-        stepper.validator = Validator(with: stepper)
-        stepper.limits = (0, 2000)
+        stepper.textColor = .red
+        stepper.limits = (0, nil)
         stepper.step = 0.01
-        stepper.value = 0.0
+        stepper.value = -20.0
+        stepper.spacing = 50.0
     }
 
     override func viewWillLayoutSubviews() {

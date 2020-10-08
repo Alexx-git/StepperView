@@ -52,7 +52,7 @@ protocol StepperViewValidator {
 }
 
 protocol StepperViewDelegate {
-    func stepperView(_ stepperView: StepperView, gotError error: ErrorKey)
+    func stepperView(_ stepperView: StepperView, hasUpdatedWith result: Result)
 }
 
 @IBDesignable
@@ -95,7 +95,6 @@ class StepperView: UIView, UITextFieldDelegate {
             textField.defaultTextAttributes[.foregroundColor] = textColor
         }
     }
-    
     
     @IBInspectable var value: Double {
         get {
@@ -209,6 +208,21 @@ class StepperView: UIView, UITextFieldDelegate {
     
     var isEditing: Bool = false
     
+    func message(for error: ErrorKey) -> String {
+        switch error {
+            case .crossedMax:
+                return "Amount must be equal or less than \(limits.max!)"
+            case .crossedMin:
+                return "Amount must be equal or higher than \(limits.min!)"
+            case .nonMultiple:
+                return "Amount must be multiple of \(step)"
+            case .incorrectSymbols:
+                return "Incorrect symbols"
+            default:
+                break
+        }
+    }
+    
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -254,6 +268,9 @@ class StepperView: UIView, UITextFieldDelegate {
             self.accelerationModifier = 1
         }
         
+//        formatter.localizesFormat = false
+        formatter.locale = Locale(identifier: "en_US")
+//        formatter.locale = .none
         formatter.numberStyle = .decimal
         formatter.groupingSeparator = ","
         formatter.decimalSeparator = "."
@@ -351,9 +368,9 @@ class StepperView: UIView, UITextFieldDelegate {
             }
         } else {
             let error = result.errorKey!
-            delegate?.stepperView(self, gotError: error)
             value = correctValue(value, error: error)
         }
+        delegate?.stepperView(self, hasUpdatedWith: result)
         updateFormat()
     }
     
@@ -397,6 +414,7 @@ class StepperView: UIView, UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         startEditing()
+        delegate?.stepperView(self, hasUpdatedWith: .ok)
         textField.text = textField.text?.removingComas()
     }
     
@@ -409,9 +427,10 @@ class StepperView: UIView, UITextFieldDelegate {
         guard let text = textField.text else { return false }
         let result = validator.shouldReplace(text: text, range: range, with: string)
         if result.allow {
+            delegate?.stepperView(self, hasUpdatedWith: .ok)
             return true
         } else if let error = result.errorKey {
-            delegate?.stepperView(self, gotError: error)
+            delegate?.stepperView(self, hasUpdatedWith: .error(error))
             return false
         }
         textField.text = (text as NSString).replacingCharacters(in: range, with: result.replacement ?? "")

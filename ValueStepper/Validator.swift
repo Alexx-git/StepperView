@@ -83,13 +83,13 @@ class Validator: StepperViewValidator {
     func shouldReplace(text: String? = "", range: NSRange, with string: String) -> Decision {
         let newText = (text! as NSString).replacingCharacters(in: range, with: string)
         guard newText != "" else {return .ok}
-        guard (checkValueIsCorrect(text: newText) != nil) else { return .noReplacementError(.incorrectSymbols) }
+        guard (checkTextIsCorrect(text: newText) != nil) else { return .noReplacementError(.incorrectSymbols) }
         guard let value = Double(newText) else { return .noReplacementError(.incorrectSymbols) }
         guard value.checkMax(limit: limits.max) else { return .noReplacementError(.crossedMax) }
         return .ok
     }
     
-    func checkValueIsCorrect(text: String, allowNegative: Bool = true, allowFloatingPoint: Bool = true) -> String? {
+    func checkTextIsCorrect(text: String, allowNegative: Bool = true, allowFloatingPoint: Bool = true) -> String? {
         var check = text
         if allowNegative && (check.first == "-") {
             check.remove(at: check.startIndex)
