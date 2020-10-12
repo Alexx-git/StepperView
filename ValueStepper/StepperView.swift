@@ -31,10 +31,10 @@ struct Decision {
     var replacement: String?
     
     static var ok = Decision(allow: true, errorKey: nil, replacement: nil)
-    static func replacement(_ string: String) -> Self {
+    static func replacement(_ string: String) -> Decision {
         return Decision(allow: false, errorKey: nil, replacement: string)
     }
-    static func noReplacementError(_ errorKey: ErrorKey?) -> Self {
+    static func noReplacementError(_ errorKey: ErrorKey?) -> Decision {
         return Decision(allow: false, errorKey: errorKey, replacement: nil)
     }
 }
