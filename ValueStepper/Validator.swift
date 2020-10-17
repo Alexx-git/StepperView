@@ -80,13 +80,19 @@ class Validator: StepperViewValidator {
         }
     }
     
-    func shouldReplace(text: String? = "", range: NSRange, with string: String) -> Decision {
+    func shouldReplace(text: String? = "", range: NSRange, with string: String) -> Result {
         let newText = (text! as NSString).replacingCharacters(in: range, with: string)
         guard newText != "" else {return .ok}
-        guard (checkTextIsCorrect(text: newText) != nil) else { return .noReplacementError(.incorrectSymbols) }
-        guard let value = Double(newText) else { return .noReplacementError(.incorrectSymbols) }
-        guard value.checkMax(limit: limits.max) else { return .noReplacementError(.crossedMax) }
-        return .ok
+        guard (checkTextIsCorrect(text: newText) != nil) else { return .error(.incorrectSymbols) }
+//        guard let value = Double(newText) else { return .error(.incorrectSymbols) }
+        if let value = Double(newText) {
+            guard value.checkMax(limit: limits.max) else { return .error(.crossedMax) }
+            return .ok
+        } else if newText == "-" {
+            return .ok
+        }
+        return .error(.incorrectSymbols)
+        
     }
     
     func checkTextIsCorrect(text: String, allowNegative: Bool = true, allowFloatingPoint: Bool = true) -> String? {
@@ -109,6 +115,7 @@ class Validator: StepperViewValidator {
     }
     
     func checkIfOnlyDigital(text: String) -> Bool {
+        if text == "" {return true}
         let charset = CharacterSet.decimalDigits
         return text.rangeOfCharacter(from: charset.inverted) == nil
     }

@@ -48,7 +48,7 @@ protocol StepperViewValidator {
     
     func checkText(_ text: String?) -> Result
     func checkValue(_ value: Double) -> Result
-    func shouldReplace(text: String?, range: NSRange, with string: String) -> Decision
+    func shouldReplace(text: String?, range: NSRange, with string: String) -> Result
 }
 
 protocol StepperViewDelegate {
@@ -426,15 +426,11 @@ class StepperView: UIView, UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return false }
         let result = validator.shouldReplace(text: text, range: range, with: string)
-        if result.allow {
-            delegate?.stepperView(self, hasUpdatedWith: .ok)
-            return true
-        } else if let error = result.errorKey {
-            delegate?.stepperView(self, hasUpdatedWith: .error(error))
+        delegate?.stepperView(self, hasUpdatedWith: result)
+        if result.errorKey == .incorrectSymbols {
             return false
         }
-        textField.text = (text as NSString).replacingCharacters(in: range, with: result.replacement ?? "")
-        return false
+        return true
     }
 }
 
