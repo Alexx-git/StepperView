@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, StepperViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,11 +26,13 @@ class ViewController: UIViewController {
         stepper.step = 0.01
         stepper.value = -20.0
         stepper.spacing = 50.0
+        stepper.delegate = self
     }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        print("self: \(self)")
+    
+    func stepperView(_ stepperView: StepperView, hasUpdatedWith result: Result) {
+        if !result.valid {
+            print(stepperView.message(for: result.errorKey!))
+        }
     }
 
 }
